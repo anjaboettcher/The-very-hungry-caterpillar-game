@@ -41,7 +41,7 @@ class Caterpillar {
     draw(ctx) {
         ctx.save();
         ctx.beginPath();
-        ctx.arc(this.x, this.y, 10, 0, Math.PI*4);
+        ctx.ellipse(this.x, this.y, 10, 12, Math.PI, 0, 2 * Math.PI);
         ctx.fillStyle = "#D01C28";
         ctx.fill();
         ctx.closePath();
@@ -59,25 +59,25 @@ class Caterpillar {
         ctx.closePath();
     
         ctx.beginPath();
-        ctx.arc(this.x, this.y+24, 10, 0, Math.PI*4);
+        ctx.ellipse(this.x, this.y+24, 10, 12, Math.PI, 0, 2 * Math.PI);
         ctx.fillStyle = "#1B6647";
         ctx.fill();
         ctx.closePath();
     
         ctx.beginPath();
-        ctx.arc(this.x, this.y+48, 10, 0, Math.PI*4);
+        ctx.ellipse(this.x, this.y+48, 10, 12, Math.PI, 0, 2 * Math.PI);
         ctx.fillStyle = "#208641";
         ctx.fill();
         ctx.closePath();
     
         ctx.beginPath();
-        ctx.arc(this.x, this.y+72, 10, 0, Math.PI*4);
+        ctx.ellipse(this.x, this.y+72, 10, 12, Math.PI, 0, 2 * Math.PI);
         ctx.fillStyle = "#147F70";
         ctx.fill();
         ctx.closePath();
     
         ctx.beginPath();
-        ctx.arc(this.x, this.y+96, 10, 0, Math.PI*4);
+        ctx.ellipse(this.x, this.y+96, 10, 12, Math.PI, 0, 2 * Math.PI);
         ctx.fillStyle = "#1D4319";
         ctx.fill();
         ctx.closePath();

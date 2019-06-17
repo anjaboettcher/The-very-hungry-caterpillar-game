@@ -14,9 +14,9 @@ class Fruit {
       const row = this.row
       img.onload = function () {
 
-        ctx.drawImage(img, col*24,row*24, 25, 25);
+        ctx.drawImage(img, col*24,row*24, 28, 28);
       };
-      img.src = `/images/${this.randomFruitName}.png`;   
+      img.src = `images/${this.randomFruitName}.png`;   
     }
       
 }

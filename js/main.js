@@ -10,6 +10,7 @@ var height = canvas.height
 var numberOfTiles = 25
 var tileSize = width / numberOfTiles
 let frame = 150
+let score = 0; 
 
 
 //calling fruit and caterpillar
@@ -20,7 +21,7 @@ var caterpillar = new Caterpillar();
 
 //drawing the actual grid
   function drawGrid() {
-    // Draw the vertical lines
+    ctx.fillStyle = 'lightgrey';
     for (var x = 0; x <= height; x+=tileSize) {
         ctx.strokeStyle = "#c1c5cc";
       ctx.beginPath()
@@ -61,16 +62,16 @@ function updateEverything(keyCode) {
 }
 
   function drawEverything(){
-    var background = new Image();
-    background.src = "images/grass.jpg";
-    background.globalAlpha = 0.2;
+    //var background = new Image();
+    //background.src = "images/grass.jpg";
+    
     ctx.clearRect(0,0,600,600)
-    background.onload = function(){
-      ctx.drawImage(background,0,0); 
+    //background.onload = function(){
+      //ctx.drawImage(background,0,0); 
       drawGrid()
       caterpillar.draw(ctx)
       fruit.draw(ctx)  
-    }
+    //}
   }
       
   /*function animation() {
