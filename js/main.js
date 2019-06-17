@@ -1,8 +1,8 @@
 var canvas = document.querySelector('canvas')
 var ctx = canvas.getContext('2d')
 
-canvas.tabindex = 0;
 
+canvas.tabindex = 0;
 
 //constants
 var width = canvas.width
@@ -11,12 +11,10 @@ var numberOfTiles = 25
 var tileSize = width / numberOfTiles
 let frame = 150
 
-var background = new Image();
-background.src = "images/grass.jpg";
 
 //calling fruit and caterpillar
-var fruits = []
-var fruit = new Fruit(numberOfTiles, tileSize, `images/${this.randomFruitName}.png`);
+//var fruits = []
+var fruit = new Fruit();
 var caterpillar = new Caterpillar();
 
 
@@ -59,32 +57,33 @@ function updateEverything(keyCode) {
     case 39: caterpillar.moveRight(); break;
     case 40: caterpillar.moveDown();  break;
   }
+  drawEverything()
 }
 
   function drawEverything(){
-    ctx.clearRect(0,0,width,height)
-    
-    drawGrid()
-
-    caterpillar.draw(ctx)
-   
+    var background = new Image();
+    background.src = "images/grass.jpg";
+    background.globalAlpha = 0.2;
+    ctx.clearRect(0,0,600,600)
     background.onload = function(){
-      ctx.drawImage(background,0,0);   
-      }
+      ctx.drawImage(background,0,0); 
+      drawGrid()
+      caterpillar.draw(ctx)
+      fruit.draw(ctx)  
+    }
   }
-
-  function animation() {
-
-    drawEverything(ctx);
+      
+  /*function animation() {
+    drawEverything();
     window.requestAnimationFrame(animation);
   }
   animation();
-
+*/
 
 document.onkeydown = function(e) {
   e.preventDefault() // Stop the default behavior (moving the screen to the left/up/right/down)
 
 updateEverything(e.keyCode)
 
-drawEverything()
 }
+drawEverything()

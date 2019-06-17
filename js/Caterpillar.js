@@ -1,10 +1,9 @@
 class Caterpillar {
     constructor(x,y){
-        this.x = x; //give it a number to try
-        this.y = y; //give it a number to try
+        this.x = tileSize/2; //give it a number to try
+        this.y = 300; //give it a number to try
         this.orientation = 'top'
     }
-
   /* 
     //new approach
     caterpillarBody(x,y){
@@ -35,16 +34,12 @@ class Caterpillar {
     } else if (direction == 'down') {
         caterpillarY+tileSize;
     }
-
 }
-
-
 */
     //old approach
 
     draw(ctx) {
         ctx.save();
-
         ctx.beginPath();
         ctx.arc(this.x, this.y, 10, 0, Math.PI*4);
         ctx.fillStyle = "#D01C28";
@@ -86,13 +81,12 @@ class Caterpillar {
         ctx.fillStyle = "#1D4319";
         ctx.fill();
         ctx.closePath();
-
+       
         ctx.restore();
       } 
-      
             
         moveUp(){
-            if (this.y === 0 + tileSize/2){
+            if (this.y <= 0 + tileSize/2){
                 this.y = tileSize/2
             } else {
                 this.y = this.y - tileSize
@@ -112,7 +106,7 @@ class Caterpillar {
               }
 
         moveLeft(){
-                if (this.x === 0 + tileSize/2) {
+                if (this.x <= 0 + tileSize/2) {
                     this.x = tileSize/2
                 } else {
                     this.x = this.x-tileSize
