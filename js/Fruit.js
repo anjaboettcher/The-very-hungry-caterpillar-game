@@ -24,7 +24,6 @@ class Fruit {
     let randomIndex = Math.floor(16 * Math.random());
     this.randomFruitName = fruitArray[randomIndex];
     console.log(this.randomFruitName);
-
     this.img = new Image();
     this.img.src = `images/${this.randomFruitName}.png`;
   }
@@ -32,7 +31,7 @@ class Fruit {
   draw(ctx) {
     ctx.save();
 
-    let extraSize = 10
+    let extraSize = 6
     ctx.drawImage(
       this.img,
       this.col * tileSize - extraSize,

@@ -11,38 +11,7 @@ class Caterpillar {
     ];
     this.frameBeforeMoving = 100;
   }
-  /* 
-    //new approach
-    caterpillarBody(x,y){
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, 10, 0, Math.PI*4);
-        ctx.fillStyle = "#D01C28";
-        ctx.fill();
-        ctx.closePath();
-    }
 
-    drawCaterpillar(){
-        var length = 4;
-        caterpillar = [];
-        for (var i = length; i>=0; i--){
-            caterpillar.push({x:i, y:0})
-        }
-    }
-
-    let caterpillarX = caterpillar[0].x
-    let caterpillarY = caterpillar[0].y
-
-    if (direction == 'right') {
-        caterpillarX+tileSize;
-    } else if (direction == 'left') {
-        caterpillarX-tileSize;
-    } else if (direction == 'up') {
-        caterpillarY-tileSize;
-    } else if (direction == 'down') {
-        caterpillarY+tileSize;
-    }
-}
-*/
   // Return an angle based on the direction
   // Default is "up" with the angle 0
   getRotateAngle() {
@@ -63,7 +32,7 @@ class Caterpillar {
     this.drawHead(ctx);
 
     // TODO: save the colors in an array
-
+    //colorArray=["#1B6647","#208641","#147F70","#1D4319"]
     // Draw the first body part
     for (let i = 0; i < this.previousCoordinates.length; i++) {
       ctx.save();
@@ -73,7 +42,7 @@ class Caterpillar {
         (bodyPart.row + 0.5) * tileSize
       );
       ctx.beginPath();
-      ctx.ellipse(0, 0, 10, 12, Math.PI, 0, 2 * Math.PI); // TODO: change the shape
+      ctx.arc(0, 0, 10, 0, 2 * Math.PI); // TODO: change the shape
       ctx.fillStyle = "#1B6647"; // TODO: use the array of colors
       ctx.fill();
       ctx.closePath();
@@ -179,6 +148,9 @@ class Caterpillar {
   // }
 
   moveRight() {
+    if (this.col >= 600 - tileSize) {
+      this.col = 600 - tileSize / 2;
+    } else {
     switch (this.orientation) {
       case "up":
         this.orientation = "right";
@@ -193,6 +165,7 @@ class Caterpillar {
         this.orientation = "up";
         break;
     }
+  }
     // if (this.col >= 600 - tileSize) {
     //   this.col = 600 - tileSize / 2;
     // } else {
@@ -210,7 +183,7 @@ class Caterpillar {
   update() {
     this.frameBeforeMoving--;
     if (this.frameBeforeMoving === 0) {
-      this.frameBeforeMoving = 10;
+      this.frameBeforeMoving = 20;
 
       this.previousCoordinates.unshift({
         row: this.row,
