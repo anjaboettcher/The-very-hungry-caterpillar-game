@@ -148,9 +148,6 @@ class Caterpillar {
   // }
 
   moveRight() {
-    if (this.col >= 600 - tileSize) {
-      this.col = 600 - tileSize / 2;
-    } else {
     switch (this.orientation) {
       case "up":
         this.orientation = "right";
@@ -166,14 +163,7 @@ class Caterpillar {
         break;
     }
   }
-    // if (this.col >= 600 - tileSize) {
-    //   this.col = 600 - tileSize / 2;
-    // } else {
-    //   this.col = this.col + tileSize;
-    //   this.orientation = "right";
-    //   console.log("rigth");
-    // }
-  }
+  
   moveLeft() {
     this.moveRight();
     this.moveRight();
@@ -183,7 +173,7 @@ class Caterpillar {
   update() {
     this.frameBeforeMoving--;
     if (this.frameBeforeMoving === 0) {
-      this.frameBeforeMoving = 20;
+      this.frameBeforeMoving = 8;
 
       this.previousCoordinates.unshift({
         row: this.row,
@@ -206,50 +196,12 @@ class Caterpillar {
           this.row++;
           break;
       }
+     
+      if (this.col < 0 || this.col >= 25){
+        screen = "game-lost"
+      } if(this.row < 0 || this.row >= 25){
+        screen = "game-lost"
+      }
     }
   }
-
-  /*
-              }
-        moveOrientation(){
-            this.orientation = orientation
-        }    
-        update(){
-            this.previousCoordinates.push({col: this.col, row: this.row})
-            switch (this.orientation) {
-                case "left":
-                  this.col--
-                  break;
-                case "right":
-                  this.col++
-                  break;
-                case "up":
-                  this.row--
-                  break;
-                case "down":
-                  this.row++
-                  break;
-              } 
-        }
-        draw(ctx) {
-
-            // for (let i = 0; i < this.previousCoordinates.length; i++){
-            //     const col = this.previousCoordinates[i].col;
-            //     const row = this.previousCoordinates[i].row;
-            //     ctx.save();
-            //     ctx.beginPath();
-            //     ctx.ellipse(col * tileSize, row*tileSize, 10, 12, Math.PI, 0, 2 * Math.PI);
-            //     ctx.fillStyle = "1B6647";
-            //     ctx.fill();
-            //     ctx.closePath();
-            // }
-
-            ctx.save();
-            ctx.beginPath();
-            ctx.ellipse(this.col * tileSize, this.row*tileSize, 10, 12, Math.PI, 0, 2 * Math.PI);
-            ctx.fillStyle = "#D01C28";
-            ctx.fill();
-            ctx.closePath();
-        }
-*/
 }

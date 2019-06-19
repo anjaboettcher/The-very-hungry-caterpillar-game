@@ -1,27 +1,20 @@
-class Fruit {
+class Candy {
   constructor() {
     this.radius = 6;
     this.col = Math.floor(Math.random() * numberOfTiles);
     this.row = Math.floor(Math.random() * numberOfTiles);
-    const fruitArray = [
-      "apple",
-      "orange",
-      "pear_2",
-      "pear",
-      "plum_2",
-      "plum_3",
-      "plum",
-      "strawberry",
-      "strawberry_2",
-      "strawberry_3",
-      "strawberry_4",
-      "watermelon"
+
+    const candyArray = [
+      "cake",
+      "ice_cream",
+      "lollipop",
     ];
-    let randomIndex = Math.floor(12 * Math.random());
-    this.randomFruitName = fruitArray[randomIndex];
-    console.log(this.randomFruitName);
+
+    let randomIndex = Math.floor(3 * Math.random());
+    this.randomCandyName = candyArray[randomIndex]
+    console.log(this.randomcandyName);
     this.img = new Image();
-    this.img.src = `images/${this.randomFruitName}.png`;
+    this.img.src = `images/${this.randomCandyName}.png`;
   }
 
   draw(ctx) {
