@@ -10,6 +10,7 @@ class Caterpillar {
       { col: 2, row: 24 }
     ];
     this.frameBeforeMoving = 100;
+    this.state = "caterpillar"; // Possible values: "caterpillar", "cocoon", "butterfly"
   }
 
   // Return an angle based on the direction
@@ -29,25 +30,14 @@ class Caterpillar {
   draw() {
     ctx.save();
 
-    this.drawHead(ctx);
-
-    // TODO: save the colors in an array
-    //colorArray=["#1B6647","#208641","#147F70","#1D4319"]
-    // Draw the first body part
-    for (let i = 0; i < this.previousCoordinates.length; i++) {
-      ctx.save();
-      let bodyPart = this.previousCoordinates[i];
-      ctx.translate(
-        (bodyPart.col + 0.5) * tileSize,
-        (bodyPart.row + 0.5) * tileSize
-      );
-      ctx.beginPath();
-      ctx.arc(0, 0, 10, 0, 2 * Math.PI); // TODO: change the shape
-      ctx.fillStyle = "#1B6647"; // TODO: use the array of colors
-      ctx.fill();
-      ctx.closePath();
-      ctx.restore();
+    if (this.state === "caterpillar") {
+      this.drawHead(ctx);
+    } else if (this.state === "cocoon") {
+      this.drawCocoon(ctx);
+    } else if (this.state === "butterfly") {
+      this.drawButterfly(ctx);
     }
+    this.drawBody(ctx);
 
     ctx.restore();
   }
@@ -80,72 +70,51 @@ class Caterpillar {
 
     ctx.restore();
   }
-  // oldDraw(ctx) {
-  //   ctx.save();
-  //   ctx.beginPath();
-  //   ctx.ellipse(this.col, this.row, 10, 12, Math.PI, 0, 2 * Math.PI);
-  //   ctx.fillStyle = "#D01C28";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.beginPath();
-  //   ctx.arc(this.col - 4, this.row - 2, 2, 0, Math.PI * 4);
-  //   ctx.fillStyle = "black";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.beginPath();
-  //   ctx.arc(this.col + 4, this.row - 2, 2, 0, Math.PI * 4);
-  //   ctx.fillStyle = "black";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.beginPath();
-  //   ctx.ellipse(this.col, this.row + 24, 10, 12, Math.PI, 0, 2 * Math.PI);
-  //   ctx.fillStyle = "#1B6647";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.beginPath();
-  //   ctx.ellipse(this.col, this.row + 48, 10, 12, Math.PI, 0, 2 * Math.PI);
-  //   ctx.fillStyle = "#208641";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.beginPath();
-  //   ctx.ellipse(this.col, this.row + 72, 10, 12, Math.PI, 0, 2 * Math.PI);
-  //   ctx.fillStyle = "#147F70";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.beginPath();
-  //   ctx.ellipse(this.col, this.row + 96, 10, 12, Math.PI, 0, 2 * Math.PI);
-  //   ctx.fillStyle = "#1D4319";
-  //   ctx.fill();
-  //   ctx.closePath();
-
-  //   ctx.restore();
-  // }
-
-  // moveUp() {
-  //   if (this.row <= 0 + tileSize / 2) {
-  //     this.row = tileSize / 2;
-  //   } else {
-  //     this.row = this.row - tileSize;
-  //     this.orientation = "up";
-  //     console.log("move up");
-  //   }
-  // }
-
-  // moveDown() {
-  //   if (this.row >= 600 - tileSize) {
-  //     this.row = 600 - 96;
-  //   } else {
-  //     this.row = this.row + tileSize;
-  //     this.orientation = "down";
-  //     console.log("down");
-  //   }
-  // }
+  drawBody(ctx) {
+    // TODO: save the colors in an array
+    //colorArray=["#1B6647","#208641","#147F70","#1D4319"]
+    // Draw the first body part
+    for (let i = 0; i < this.previousCoordinates.length; i++) {
+      ctx.save();
+      let bodyPart = this.previousCoordinates[i];
+      ctx.translate(
+        (bodyPart.col + 0.5) * tileSize,
+        (bodyPart.row + 0.5) * tileSize
+      );
+      ctx.beginPath();
+      ctx.arc(0, 0, 10, 0, 2 * Math.PI); // TODO: change the shape
+      ctx.fillStyle = "#1B6647"; // TODO: use the array of colors
+      ctx.fill();
+      ctx.closePath();
+      ctx.restore();
+    }
+  }
+  drawCocoon(ctx) {
+    ctx.save();
+    ctx.translate((this.col + 0.5) * tileSize, (this.row + 0.5) * tileSize);
+    ctx.beginPath();
+    var img = new Image();
+    img.src = "images/cocoon.png";
+    ctx.drawImage(img, 300, 300, 180, 85);
+    ctx.ellipse(0, 0, 10, 12, Math.PI, 0, 2 * Math.PI);
+    ctx.fillStyle = "brown";
+    ctx.fill();
+    ctx.closePath();
+    ctx.restore();
+  }
+  drawButterfly(ctx) {
+    ctx.save();
+    ctx.translate((this.col + 0.5) * tileSize, (this.row + 0.5) * tileSize);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 10, 12, Math.PI, 0, 2 * Math.PI);
+    ctx.fillStyle = "gold";
+    var img = new Image();
+    img.src = "images/butterfly.png";
+    ctx.drawImage(img, (this.col + 0.5) * tileSize, (this.row + 0.5) * tileSize, 180, 85);
+    ctx.fill();
+    ctx.closePath();
+    ctx.restore();
+  }
 
   moveRight() {
     switch (this.orientation) {
@@ -163,7 +132,7 @@ class Caterpillar {
         break;
     }
   }
-  
+
   moveLeft() {
     this.moveRight();
     this.moveRight();
@@ -173,35 +142,51 @@ class Caterpillar {
   update() {
     this.frameBeforeMoving--;
     if (this.frameBeforeMoving === 0) {
-      this.frameBeforeMoving = 8;
-
-      this.previousCoordinates.unshift({
-        row: this.row,
-        col: this.col
-      });
+      if (this.previousCoordinates.length === 0) {
+        this.state = "butterfly";
+      }
+      this.frameBeforeMoving = Math.max(3,  8 - level);
       this.previousCoordinates.pop();
 
-      // this.previousCoordinates.push({ col: this.col, row: this.row });
-      switch (this.orientation) {
-        case "left":
-          this.col--;
-          break;
-        case "right":
-          this.col++;
-          break;
-        case "up":
-          this.row--;
-          break;
-        case "down":
-          this.row++;
-          break;
-      }
-     
-      if (this.col < 0 || this.col >= 25){
-        screen = "game-lost"
-      } if(this.row < 0 || this.row >= 25){
-        screen = "game-lost"
+      if (this.state === "caterpillar") {
+        this.previousCoordinates.unshift({
+          row: this.row,
+          col: this.col
+        });
+        // this.previousCoordinates.push({ col: this.col, row: this.row });
+        switch (this.orientation) {
+          case "left":
+            this.col--;
+            break;
+          case "right":
+            this.col++;
+            break;
+          case "up":
+            this.row--;
+            break;
+          case "down":
+            this.row++;
+            break;
+        }
+        if (this.col < 0 || this.col >= 25) {
+          screen = "game-lost";
+        }
+        if (this.row < 0 || this.row >= 25) {
+          screen = "game-lost";
+        }
+      } else if (this.state === "butterfly") {
+        this.frameBeforeMoving = 1;
+        this.row -= 0.1;
+        this.col += 0.05;
       }
     }
+  }
+  startTransformation() {
+    if (this.state === "caterpillar") {
+      this.state = "cocoon";
+    }
+  }
+  checkWon() {
+    return this.state === "butterfly" && this.col > numberOfTiles && this.row < 0
   }
 }

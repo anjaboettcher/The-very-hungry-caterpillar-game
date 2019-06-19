@@ -1,15 +1,26 @@
 class Leaf {
-  constructor(col,row) {
-    this.col = col; 
-    this.row = row; 
+  constructor() {
+    this.col = 19;
+    this.row = 20;
+    this.nbOfCols = 5;
+    this.nbOfRows = 4;
+    this.isVisible = false
   }
 
-  draw() {
-    ctx.fillStyle = "#FF0000";
-    ctx.fillRect(430, 5, 180 ,135);
-    var img = new Image();
-    img.src = 'images/leaf.png';
-    ctx.drawImage(img, 422, 0, 178, 145);
-    this.frameBeforeMoving = 100;
+  draw(ctx) {
+    if (this.isVisible) {
+      ctx.save()
+      var img = new Image();
+      img.src = "images/leaf.png";
+      ctx.drawImage(
+        img,
+        tileSize * (this.col-1),
+        tileSize * (this.row-1),
+        tileSize * (this.nbOfCols+2),
+        tileSize * (this.nbOfRows+2)
+      );
+      this.frameBeforeMoving = 100;
+      ctx.restore()
+    }
   }
 }
