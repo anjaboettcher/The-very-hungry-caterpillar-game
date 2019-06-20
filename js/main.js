@@ -24,19 +24,20 @@ let candy2 = new Candy();
 // Check for collision between fruit/leaf and caterpillar 
 
 function checkCollision() {
-  if (caterpillar.col === fruit.col && caterpillar.row === fruit.row) {
+  if (caterpillar.col === fruit.col && caterpillar.row === fruit.row && fruit.isVisible) {
     fruit = new Fruit();
     fruitCount += 1;
-  } 
+  }
 
-  if (caterpillar.col === fruit2.col && caterpillar.row === fruit2.row) {
-    fruit2 = new Fruit();
-    fruitCount += 1;
-  } 
+  if (level > 1) {
 
-  if (level > 1){
-    if (caterpillar.col === candy.col && caterpillar.row === candy.row){
-      if (fruitCount > 0) { 
+    if (caterpillar.col === fruit2.col && caterpillar.row === fruit2.row && fruit2.isVisible) {
+      fruit2 = new Fruit();
+      fruitCount += 1;
+    }
+
+    if (caterpillar.col === candy.col && caterpillar.row === candy.row && candy.isVisible) {
+      if (fruitCount > 0) {
         fruitCount -= 1;
         candy = new Candy();
       } else {
@@ -45,16 +46,16 @@ function checkCollision() {
     }
   }
 
-  if (level >2){
-    if (caterpillar.col === candy2.col && caterpillar.row === candy2.row){
+  if (level > 2) {
+    if (caterpillar.col === candy2.col && caterpillar.row === candy2.row && candy2.isVisible) {
       candy2 = new Candy();
-      if (fruitCount > 0) { 
+      if (fruitCount > 0) {
         fruitCount -= 1;
       } else {
         screen = "game-lost"
       }
     }
-}
+  }
 }
 
 function checkCollisionWithLeaf() {
@@ -97,10 +98,10 @@ function drawEverything() {
     bg.draw(ctx);
     fruit.draw(ctx);
 
-    if (level >= 2){
+    if (level >= 2) {
       candy.draw(ctx);
     }
-    if (level >= 3){
+    if (level >= 3) {
       candy2.draw(ctx);
       fruit2.draw(ctx)
     }
@@ -114,6 +115,7 @@ function drawEverything() {
 function startGame() {
   screen = "play";
   fruit = new Fruit();
+  fruit2 = new Fruit();
   candy = new Candy()
   candy2 = new Candy()
   caterpillar = new Caterpillar();
@@ -189,14 +191,18 @@ function updateEverything(keyCode) {
     checkCollision();
     checkCollisionWithLeaf();
 
-    if (fruitCount >= 2) {
+    if (fruitCount >= 5) {
       leaf.isVisible = true;
       fruit.isVisible = false;
+      fruit2.isVisible = false;
       candy.isVisible = false;
+      candy2.isVisible = false;
     } else {
       leaf.isVisible = false;
       fruit.isVisible = true;
+      fruit2.isVisible = true;
       candy.isVisible = true;
+      candy2.isVisible = true;
     }
 
     if (caterpillar.checkWon()) {
@@ -212,7 +218,7 @@ function animation() {
 }
 animation();
 
-document.onkeydown = function(e) {
+document.onkeydown = function (e) {
   e.preventDefault();
   console.log(e.keyCode);
   switch (e.keyCode) {
