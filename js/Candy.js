@@ -1,7 +1,7 @@
 class Candy {
   constructor() {
     this.radius = 6;
-    //this.isVisible = true;
+    this.isVisible = true;
     this.col = Math.floor(Math.random() * numberOfTiles);
     this.row = Math.floor(Math.random() * numberOfTiles);
 
@@ -13,13 +13,13 @@ class Candy {
 
     let randomIndex = Math.floor(3 * Math.random());
     this.randomCandyName = candyArray[randomIndex]
-    console.log(this.randomcandyName);
+    console.log(this.randomCandyName);
     this.img = new Image();
     this.img.src = `images/${this.randomCandyName}.png`;
   }
 
   draw(ctx) {
-   //if (this.isVisible) {
+   if (this.isVisible) {
     ctx.save();
 
     let extraSize = 10
@@ -33,4 +33,4 @@ class Candy {
     ctx.restore();
     }
   }
-//}
+}

@@ -15,11 +15,11 @@ let level = 1;
 
 //calling objects onthe canvas
 let fruit = new Fruit();
+let fruit2 = new Fruit();
 let caterpillar = new Caterpillar();
 let leaf = new Leaf();
 let candy = new Candy();
 let candy2 = new Candy();
-
 
 // Check for collision between fruit/leaf and caterpillar 
 
@@ -28,20 +28,33 @@ function checkCollision() {
     fruit = new Fruit();
     fruitCount += 1;
   } 
-  else if (caterpillar.col === candy.col && caterpillar.row === candy.row) {
-    if (fruitCount > 0){
-      fruitCount -= 1;
-      candy = new Candy();
-    } else if (fruitCount <= 0){
-      screen = "game-lost";}
+
+  if (caterpillar.col === fruit2.col && caterpillar.row === fruit2.row) {
+    fruit2 = new Fruit();
+    fruitCount += 1;
+  } 
+
+  if (level > 1){
+    if (caterpillar.col === candy.col && caterpillar.row === candy.row){
+      if (fruitCount > 0) { 
+        fruitCount -= 1;
+        candy = new Candy();
+      } else {
+        screen = "game-lost"
+      }
     }
-   else if (caterpillar.col === candy2.col && caterpillar.row === candy2.row) {
-  if (fruitCount > 0){
-    fruitCount -= 1;
-    candy = new Candy();
-  } else if (fruitCount <= 0){
-    screen = "game-lost";}
   }
+
+  if (level >2){
+    if (caterpillar.col === candy2.col && caterpillar.row === candy2.row){
+      candy2 = new Candy();
+      if (fruitCount > 0) { 
+        fruitCount -= 1;
+      } else {
+        screen = "game-lost"
+      }
+    }
+}
 }
 
 function checkCollisionWithLeaf() {
@@ -84,14 +97,12 @@ function drawEverything() {
     bg.draw(ctx);
     fruit.draw(ctx);
 
-    if (level > 1){
+    if (level >= 2){
       candy.draw(ctx);
     }
-    if (level > 2){
+    if (level >= 3){
       candy2.draw(ctx);
-    }
-    if (level > 4){
-      fruit.draw(ctx);
+      fruit2.draw(ctx)
     }
 
     leaf.draw(ctx);
@@ -103,11 +114,12 @@ function drawEverything() {
 function startGame() {
   screen = "play";
   fruit = new Fruit();
+  candy = new Candy()
+  candy2 = new Candy()
   caterpillar = new Caterpillar();
   fruitCount = 0;
   leaf = new Leaf()
 }
-
 
 function drawHome(ctx) {
   ctx.save();
@@ -123,10 +135,10 @@ function drawHome(ctx) {
   ctx.fillText("BASIC RULES", 85, 310);
   ctx.font = "16px 'Comfortaa', cursive";
   ctx.fillStyle = "#3d3838";
-  ctx.fillText("Press ENTER to", 85, 135);
-  ctx.fillText("START | RESTART", 85, 160);
-  ctx.fillText("Use ARROW KEYS", 340, 135);
-  ctx.fillText("for NAVIGATION", 340, 160);
+  ctx.fillText("Use ARROW KEYS", 85, 135);
+  ctx.fillText("for NAVIGATION", 85, 160);
+  ctx.fillText("Press ENTER to", 340, 135);
+  ctx.fillText("START | RESTART", 340, 160);
   ctx.fillText("COLLECT 5 FRUITS", 85, 345);
   ctx.fillText("(NOT CANDY)", 85, 370);
   ctx.fillText("HEAD TO THE LEAF!", 340, 345);
@@ -177,10 +189,14 @@ function updateEverything(keyCode) {
     checkCollision();
     checkCollisionWithLeaf();
 
-    if (fruitCount >= 5) {
+    if (fruitCount >= 2) {
       leaf.isVisible = true;
       fruit.isVisible = false;
       candy.isVisible = false;
+    } else {
+      leaf.isVisible = false;
+      fruit.isVisible = true;
+      candy.isVisible = true;
     }
 
     if (caterpillar.checkWon()) {
