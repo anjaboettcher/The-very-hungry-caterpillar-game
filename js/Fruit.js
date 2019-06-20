@@ -1,6 +1,7 @@
 class Fruit {
   constructor() {
     this.radius = 6;
+    this.isVisible = true;
     this.col = Math.floor(Math.random() * numberOfTiles);
     this.row = Math.floor(Math.random() * numberOfTiles);
     const fruitArray = [
@@ -25,9 +26,10 @@ class Fruit {
   }
 
   draw(ctx) {
+    if (this.isVisible) {
     ctx.save();
 
-    let extraSize = 6
+    let extraSize = 10
     ctx.drawImage(
       this.img,
       this.col * tileSize - extraSize,
@@ -36,5 +38,6 @@ class Fruit {
       tileSize + 2 * extraSize
     );
     ctx.restore();
+    }
   }
 }

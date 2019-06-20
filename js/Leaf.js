@@ -4,7 +4,7 @@ class Leaf {
     this.row = 20;
     this.nbOfCols = 5;
     this.nbOfRows = 4;
-    this.isVisible = false
+    this.isVisible = false;
   }
 
   draw(ctx) {
@@ -19,7 +19,7 @@ class Leaf {
         tileSize * (this.nbOfCols+2),
         tileSize * (this.nbOfRows+2)
       );
-      this.frameBeforeMoving = 100;
+      this.frameBeforeMoving = 90;
       ctx.restore()
     }
   }

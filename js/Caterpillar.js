@@ -9,7 +9,7 @@ class Caterpillar {
       { col: 2, row: 23 },
       { col: 2, row: 24 }
     ];
-    this.frameBeforeMoving = 100;
+    this.frameBeforeMoving = 60;
     this.state = "caterpillar"; // Possible values: "caterpillar", "cocoon", "butterfly"
   }
 
@@ -92,28 +92,20 @@ class Caterpillar {
   drawCocoon(ctx) {
     ctx.save();
     ctx.translate((this.col + 0.5) * tileSize, (this.row + 0.5) * tileSize);
-    ctx.beginPath();
     var img = new Image();
     img.src = "images/cocoon.png";
-    ctx.drawImage(img, 300, 300, 180, 85);
-    ctx.ellipse(0, 0, 10, 12, Math.PI, 0, 2 * Math.PI);
-    ctx.fillStyle = "brown";
-    ctx.fill();
-    ctx.closePath();
-    ctx.restore();
+    ctx.drawImage(img, 0, 0, 120, 65);
+    ctx.restore();  
   }
+
+
   drawButterfly(ctx) {
     ctx.save();
-    ctx.translate((this.col + 0.5) * tileSize, (this.row + 0.5) * tileSize);
-    ctx.beginPath();
-    ctx.ellipse(0, 0, 10, 12, Math.PI, 0, 2 * Math.PI);
-    ctx.fillStyle = "gold";
+    ctx.translate((this.col - 2)*tileSize, (this.row -2 ) *tileSize);
     var img = new Image();
     img.src = "images/butterfly.png";
-    ctx.drawImage(img, (this.col + 0.5) * tileSize, (this.row + 0.5) * tileSize, 180, 85);
-    ctx.fill();
-    ctx.closePath();
-    ctx.restore();
+    ctx.drawImage(img, this.col, this.row, 120, 65);
+    ctx.restore();  
   }
 
   moveRight() {
@@ -132,6 +124,8 @@ class Caterpillar {
         break;
     }
   }
+
+  //moveLeft is turning right three times
 
   moveLeft() {
     this.moveRight();
@@ -177,7 +171,7 @@ class Caterpillar {
       } else if (this.state === "butterfly") {
         this.frameBeforeMoving = 1;
         this.row -= 0.1;
-        this.col += 0.05;
+        this.col += 0.08;
       }
     }
   }

@@ -13,46 +13,34 @@ let bg = new Background();
 let screen = "home"; // Possible values: "home", "play", "level-won", "game-lost"
 let level = 1;
 
-//calling fruit and caterpillar
-//var fruits = []
+//calling objects onthe canvas
 let fruit = new Fruit();
-
 let caterpillar = new Caterpillar();
-
 let leaf = new Leaf();
-
 let candy = new Candy();
 let candy2 = new Candy();
 
 
-// Check for collision between fruit and caterpillar
-
-/*Level 2
-
-
-
-  } else if (caterpillar.col === candy.col && caterpillar.row === candy.row) {
-    if (fruitCount > 0){
-      fruitCount -= 1;
-      candy = new Candy();
-    }
-*/
-
-/*Level 3
-function drawScore(ctx) {
-  ctx.fillText(`Level 3`, 500 , 40);
-}
-let candy = new Candy();
-let caterpillar2 = new Caterpillar();
-    caterpillar2.draw(ctx);
-
-*/
+// Check for collision between fruit/leaf and caterpillar 
 
 function checkCollision() {
   if (caterpillar.col === fruit.col && caterpillar.row === fruit.row) {
     fruit = new Fruit();
-    ctx.fillStyle = "red";
     fruitCount += 1;
+  } 
+  else if (caterpillar.col === candy.col && caterpillar.row === candy.row) {
+    if (fruitCount > 0){
+      fruitCount -= 1;
+      candy = new Candy();
+    } else if (fruitCount <= 0){
+      screen = "game-lost";}
+    }
+   else if (caterpillar.col === candy2.col && caterpillar.row === candy2.row) {
+  if (fruitCount > 0){
+    fruitCount -= 1;
+    candy = new Candy();
+  } else if (fruitCount <= 0){
+    screen = "game-lost";}
   }
 }
 
@@ -75,9 +63,9 @@ function drawScore(ctx) {
   ctx.font = "20px 'Comfortaa', cursive";
   ctx.textAlign = "left";
   ctx.fillStyle = "white";
-  ctx.fillText(`Level: ${level} | Fruit: ${`○`.repeat(fruitCount)}`, 20, 40);
+  ctx.fillText(`Level: ${level} | Fruit: ${`●`.repeat(fruitCount)}`, 20, 40);
 }
-
+//draw everything
 function drawEverything() {
   ctx.clearRect(0, 0, 600, 600);
   if (screen === "home") {
@@ -99,8 +87,12 @@ function drawEverything() {
     if (level > 1){
       candy.draw(ctx);
     }
-     
-
+    if (level > 2){
+      candy2.draw(ctx);
+    }
+    if (level > 4){
+      fruit.draw(ctx);
+    }
 
     leaf.draw(ctx);
     caterpillar.draw(ctx);
@@ -116,29 +108,29 @@ function startGame() {
   leaf = new Leaf()
 }
 
+
 function drawHome(ctx) {
   ctx.save();
-  ctx.fillStyle = "white";
-  ctx.globalAlpha = 0.8;
-  ctx.fillRect(0, 0, width, height);
-  ctx.restore();
+  var img = new Image();
   ctx.fillStyle = "#d3f7cf";
   ctx.fillRect(0, 0, 600, 600);
-  ctx.stroke();
+  img.src = "images/instructions.png";
+  ctx.drawImage(img, 0, 0, 600, 600);
   ctx.font = "20px 'Comfortaa', cursive";
-  ctx.textAlign = "center";
   ctx.fillStyle = "#cf372d";
-  ctx.fillText("WELCOME!", 300, 100);
-  ctx.fillText("Press Enter to Start", 300, 180);
-  var img = new Image();
-  img.src = "images/enter.png";
-  ctx.drawImage(img, 230, 200, 97, 109);
-  ctx.fillText("Use arrow keys to nagivate", 300, 350);
-  var img = new Image();
-  img.src = "images/arrows.png";
-  ctx.drawImage(img, 179, 380, 242, 117);
+  ctx.font = "25px 'Comfortaa', cursive";
+  ctx.fillText("NAVIGATION", 85, 100);
+  ctx.fillText("BASIC RULES", 85, 310);
+  ctx.font = "16px 'Comfortaa', cursive";
+  ctx.fillStyle = "#3d3838";
+  ctx.fillText("Press ENTER to", 85, 135);
+  ctx.fillText("START | RESTART", 85, 160);
+  ctx.fillText("Use ARROW KEYS", 340, 135);
+  ctx.fillText("for NAVIGATION", 340, 160);
+  ctx.fillText("COLLECT 5 FRUITS", 85, 345);
+  ctx.fillText("(NOT CANDY)", 85, 370);
+  ctx.fillText("HEAD TO THE LEAF!", 340, 345);
 }
-
 
 function drawGameWon() {
   screen = "level-won";
@@ -153,15 +145,15 @@ function drawGameWon() {
   ctx.font = "20px 'Comfortaa', cursive";
   ctx.textAlign = "center";
   ctx.fillStyle = "#cf372d";
-  ctx.fillText("NOM NOM! You made it to the next level!", 300, 300);
+  ctx.fillText("NOM NOM FRUIT!", 300, 240);
+  ctx.fillText("But I am still hungry! Next level coming up!", 300, 280);
+  ctx.fillText("Press ENTER to Proceed", 300, 320);
 }
 
 function drawGameOver() {
   ctx.save();
-  ctx.fillStyle = "white";
   ctx.globalAlpha = 0.8;
   ctx.fillRect(0, 0, width, height);
-  ctx.restore();
   ctx.fillStyle = "#ef918b";
   ctx.fillRect(0, 0, 600, 600);
   ctx.stroke();
@@ -173,7 +165,8 @@ function drawGameOver() {
   img.src = "images/caterpillar-sad.png";
   ctx.drawImage(img, 155, 160, 275, 184);
   ctx.fillText("PRESS ENTER", 300, 380);
-  ctx.fillText("FOR HOME SCREEN", 300, 420);
+  ctx.fillText("TO PLAY AGAIN", 300, 420);
+  ctx.restore();
 }
 
 function updateEverything(keyCode) {
@@ -184,8 +177,10 @@ function updateEverything(keyCode) {
     checkCollision();
     checkCollisionWithLeaf();
 
-    if (fruitCount >= 1) {
+    if (fruitCount >= 5) {
       leaf.isVisible = true;
+      fruit.isVisible = false;
+      candy.isVisible = false;
     }
 
     if (caterpillar.checkWon()) {
