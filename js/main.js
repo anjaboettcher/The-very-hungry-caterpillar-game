@@ -15,10 +15,9 @@ let level = 1;
 
 //calling objects onthe canvas
 let mySound1 = new Audio("images/chewing.mp3")
-//mySound1.src="images/chewing.mp3";
-let mySound2 = new sound("images/hic4.mp3");
-let mySound3 = new sound("images/happykids.mp3");
-let mySound4 = new sound("images/HONK.wav");
+let mySound2 = new Audio("images/hic4.mp3");
+let mySound3 = new Audio("images/happykids.mp3");
+let mySound4 = new Audio("images/HONK.wav");
 
 let fruit = new Fruit();
 let fruit2 = new Fruit();
