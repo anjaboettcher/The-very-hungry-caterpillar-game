@@ -14,6 +14,11 @@ let screen = "home"; // Possible values: "home", "play", "level-won", "game-lost
 let level = 1;
 
 //calling objects onthe canvas
+let mySound1 = new sound("images/chewing.mp3");
+let mySound2 = new sound("images/hic4.mp3");
+let mySound3 = new sound("images/happykids.mp3");
+let mySound4 = new sound("images/HONK.wav");
+
 let fruit = new Fruit();
 let fruit2 = new Fruit();
 let caterpillar = new Caterpillar();
@@ -25,22 +30,25 @@ let candy2 = new Candy();
 
 function checkCollision() {
   if (caterpillar.col === fruit.col && caterpillar.row === fruit.row && fruit.isVisible) {
+    mySound1.play();
     fruit = new Fruit();
     fruitCount += 1;
   }
 
   if (level > 1) {
-
     if (caterpillar.col === fruit2.col && caterpillar.row === fruit2.row && fruit2.isVisible) {
+      mySound1.play();
       fruit2 = new Fruit();
       fruitCount += 1;
     }
 
     if (caterpillar.col === candy.col && caterpillar.row === candy.row && candy.isVisible) {
       if (fruitCount > 0) {
+        mySound2.play();
         fruitCount -= 1;
         candy = new Candy();
       } else {
+        mySound2.play();
         screen = "game-lost"
       }
     }
@@ -50,8 +58,10 @@ function checkCollision() {
     if (caterpillar.col === candy2.col && caterpillar.row === candy2.row && candy2.isVisible) {
       candy2 = new Candy();
       if (fruitCount > 0) {
+        mySound2.play();
         fruitCount -= 1;
       } else {
+        mySound2.play();
         screen = "game-lost"
       }
     }
@@ -67,6 +77,7 @@ function checkCollisionWithLeaf() {
     caterpillar.row < leaf.row + leaf.nbOfRows
   ) {
     console.log("hit");
+    mySound3.play();
     caterpillar.startTransformation();
   }
 }

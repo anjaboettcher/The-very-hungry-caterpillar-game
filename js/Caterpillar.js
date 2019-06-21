@@ -98,7 +98,6 @@ class Caterpillar {
     ctx.restore();  
   }
 
-
   drawButterfly(ctx) {
     ctx.save();
     ctx.translate((this.col - 2)*tileSize, (this.row -2 ) *tileSize);
@@ -163,9 +162,11 @@ class Caterpillar {
             break;
         }
         if (this.col < 0 || this.col >= 25) {
+          mySound4.play();
           screen = "game-lost";
         }
         if (this.row < 0 || this.row >= 25) {
+          mySound4.play();
           screen = "game-lost";
         }
       } else if (this.state === "butterfly") {
