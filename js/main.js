@@ -10,7 +10,7 @@ var tileSize = width / numberOfTiles;
 let frame = 0;
 let fruitCount = 0;
 let bg = new Background();
-let screen = "home"; // Possible values: "home", "play", "level-won", "game-lost"
+let screen = "home"; // Possible values: "home", "play", "level-won", "game-lost","game-final"
 let level = 1;
 
 //calling objects onthe canvas
@@ -27,7 +27,6 @@ let candy = new Candy();
 let candy2 = new Candy();
 
 // Check for collision between fruit/leaf and caterpillar 
-
 function checkCollision() {
   if (caterpillar.col === fruit.col && caterpillar.row === fruit.row && fruit.isVisible) {
     mySound1.play();
@@ -82,6 +81,7 @@ function checkCollisionWithLeaf() {
   }
 }
 
+
 //draw Score
 function drawScore(ctx) {
   ctx.save();
@@ -93,6 +93,11 @@ function drawScore(ctx) {
 //draw everything
 function drawEverything() {
   ctx.clearRect(0, 0, 600, 600);
+
+  if (screen === "game-final") {
+      drawGameFinal()
+  }
+
   if (screen === "home") {
     drawHome(ctx);
   }
@@ -158,7 +163,6 @@ function drawHome(ctx) {
 }
 
 function drawGameWon() {
-  screen = "level-won";
   ctx.save();
   ctx.fillStyle = "white";
   ctx.globalAlpha = 0.8;
@@ -194,6 +198,24 @@ function drawGameOver() {
   ctx.restore();
 }
 
+function drawGameFinal() {
+ctx.save();
+ctx.fillStyle = "#f9ddb8";
+ctx.fillRect(0, 0, 600, 600);
+ctx.stroke();
+ctx.fillStyle = "#cf372d";
+ctx.font = "20px 'Comfortaa', cursive";
+ctx.textAlign = "center";
+ctx.fillText("YOU MADE IT!", 300, 150);
+var img = new Image();
+img.src = "images/butterfly.png";
+ctx.drawImage(img, 155, 200, 284, 113);
+ctx.fillText("THANKS FOR YOUR HELP!", 300, 380);
+ctx.fillText("DO NOT FORGET TO EAT YOUR FRUIT!", 300, 420);
+ctx.restore();
+}
+
+
 function updateEverything(keyCode) {
   if (screen === "play") {
     frame++;
@@ -219,6 +241,14 @@ function updateEverything(keyCode) {
     if (caterpillar.checkWon()) {
       screen = "level-won";
     }
+
+    if(level >= 5 && fruitCount === 5 && leaf.isVisible &&
+      leaf.col <= caterpillar.col &&
+      caterpillar.col < leaf.col + leaf.nbOfCols &&
+      leaf.row <= caterpillar.row &&
+      caterpillar.row < leaf.row + leaf.nbOfRows){
+      screen = "game-final";
+  }
   }
 }
 

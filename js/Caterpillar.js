@@ -71,8 +71,7 @@ class Caterpillar {
     ctx.restore();
   }
   drawBody(ctx) {
-    // TODO: save the colors in an array
-    //colorArray=["#1B6647","#208641","#147F70","#1D4319"]
+
     // Draw the first body part
     for (let i = 0; i < this.previousCoordinates.length; i++) {
       ctx.save();
@@ -138,7 +137,7 @@ class Caterpillar {
       if (this.previousCoordinates.length === 0) {
         this.state = "butterfly";
       }
-      this.frameBeforeMoving = Math.max(3,  8 - level);
+      this.frameBeforeMoving = Math.max(8,  8 - level);
       this.previousCoordinates.pop();
 
       if (this.state === "caterpillar") {
